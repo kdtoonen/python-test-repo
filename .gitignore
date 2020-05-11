@@ -16,6 +16,12 @@ _mailinglist
 .idea/
 docs/_build/
 .vscode
+my-notes.txt
+virtualenv/
+venv-python-test/
+Lib/
+venv/
+Scripts/
 
 # Coverage reports
 htmlcov/

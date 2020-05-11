@@ -1,5 +1,6 @@
-from flask import Flask, current_app, g
+from flask import Flask, current_app, g, render_template
 import sqlite3
+
 app = Flask(__name__)
 app.config.from_object('appconfig')
 DATABASE = app.config['DATABASE']
@@ -23,7 +24,7 @@ def get_db():
 
 @app.route('/')
 def hello_world():
-    return 'Hello World!'
+    return render_template("layout.html", sample_text="Under construction!")
 
 
 if __name__ == '__main__':
