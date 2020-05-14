@@ -1,2 +1,3 @@
 FLASK_DEBUG = 1
-DATABASE = 'C:\\dev-projects\\python-test-repo\\data\\python-test-project.db'
+SQLALCHEMY_DATABASE_URI = 'sqlite:///data/test.db'
+SQLALCHEMY_TRACK_MODIFICATIONS = False

@@ -1,2 +1,0 @@
-set PYTHON_TEST_PROJECT_SETTINGS=appconfig
-python app.py
