@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from flask_bootstrap import Bootstrap
 
-app = Flask(__name__, template_folder='templates', static_folder='static')
+app = Flask(__name__)
+Bootstrap(app)
 app.config.from_object('appconfig')
 db = SQLAlchemy(app)
 
