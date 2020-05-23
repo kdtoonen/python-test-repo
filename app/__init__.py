@@ -2,10 +2,12 @@ from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from flask_bootstrap import Bootstrap
+import user_helper
 
 app = Flask(__name__)
 Bootstrap(app)
 app.config.from_object('appconfig')
+app.debug = True
 db = SQLAlchemy(app)
 
 
@@ -17,6 +19,19 @@ class Users(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.id
+
+
+@app.route('/login', methods=('GET', 'POST'))
+def login():
+    if request.method == 'GET':
+        return render_template('index.html', messageStatus="", loginStatus="")
+    elif request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        if user_helper.password_and_username_ok(username, password):
+            return render_template('main.html')
+        else:
+            return render_template('index.html', messageStatus="", loginStatus="")
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -66,3 +81,5 @@ def update(id):
 
     else:
         return render_template('update.html', user=user)
+
+

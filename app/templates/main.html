@@ -3,43 +3,10 @@
 {% block content %}
 <div class="content">
     <div class="page-header">
-        <h1>Hello there! <small>Below is user table</small></h1>
+        <h1>logged on </h1>
     </div>
-    {% if users|length < 1 %}
-    <div class="alert alert-info" role="alert">There are no user. Create one below!</div>
-    {% else %}
-    <table class="table table-striped">
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Date Created</th>
-            <th>Action</th>
-        </tr>
-        {% for user in users %}
-        <tr>
-            <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.date_created.date() }}</td>
-            <td>
-                <a href="/delete/{{user.id}}">Delete</a>
-                <br>
-                <a href="/update/{{user.id}}">Update</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% endif %}
-    <form action="/" method="POST">
-        <div class="form-group">
-            <label>User Name:</label>
-            <input type="text" class="form-control" name="name" placeholder="Type your name here">
-        </div>
-        <div class="form-group">
-            <label>Email:</label>
-            <input type="email" class="form-control" name="email" placeholder="Type your email here">
-        </div>
-        <button type="submit" class="btn btn-default">Add User</button>
-    </form>
+
+
 </div>
 
 
