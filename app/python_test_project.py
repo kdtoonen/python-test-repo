@@ -17,7 +17,7 @@ login_manager = LoginManager()
 @app.route('/login', methods=('GET', 'POST'))
 def login():
     if request.method == 'GET':
-        return render_template('index.html', messageStatus="", loginStatus="")
+        return render_template('landing.html', messageStatus="", loginStatus="")
     elif request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
@@ -41,6 +41,7 @@ class User:
 
     def __init__(self, user_id):
         self.userid = user_id
+        self.name = None
         self.userInfo = None
 
     def is_authenticated(self):
@@ -56,9 +57,9 @@ class User:
         return self.userid
 
     #DIT FIXEN
-    def set_userInfo(self, user_id):
-        user_info = users.get_user_info(user_id)
-        return list(user_info)
+    def set_userInfo(self, userinfo):
+        self.userInfo = userinfo
+        self.name = self.userInfo[0]
 
 
 @login_manager.user_loader
