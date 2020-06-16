@@ -3,9 +3,6 @@ from flask_login import LoginManager, login_required, login_user, logout_user, U
 import users
 from admin_page import admin_page
 
-from flask_bootstrap import Bootstrap
-
-
 app = Flask(__name__)
 app.config.from_object('appconfig')
 app.debug = True
@@ -72,7 +69,7 @@ class User:
     def get_id(self):
         return self.userid
 
-    #DIT FIXEN
+    #TODO: FIX THIS
     def set_userInfo(self, userinfo):
         self.userInfo = userinfo
         self.name = self.userInfo[0]
