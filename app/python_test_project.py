@@ -3,6 +3,7 @@ from flask_login import LoginManager, login_required, login_user, logout_user, U
 import users
 from admin_page import admin_page
 
+
 app = Flask(__name__)
 app.config.from_object('appconfig')
 app.debug = True
@@ -46,7 +47,7 @@ def create_account():
                                                                  "would you like to reset it and receive "
                                                                  "a change password link?", loginStatus="")
         else:
-            pass
+            users.create_user(username, first_name, last_name)
             # TODO: handle new user create
 
 
