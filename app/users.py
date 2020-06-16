@@ -1,21 +1,14 @@
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
-db = SQLAlchemy()
-
-
-class Users(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    FirstName = db.Column(db.String(200), nullable=False)
-    LastName = db.Column(db.String(200), nullable=False)
-    email = db.Column(db.String(200), nullable=False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
-
-    def __repr__(self):
-        return '<User %r>' % self.id
+from model import Users, db
 
 
 def get_user_info(self):
     return {"Name": "Test 1"}
+
+
+def create_user(user_email, first_name, last_name):
+    new_user = Users(first_name, last_name, user_email)
+    db.session.add(new_user)
+    db.session.commit()
 
 
 def password_and_username_ok(user_name, password):
@@ -30,3 +23,5 @@ def get_user_id():
     return 1
 
 
+def generate_initial_password():
+    pass
