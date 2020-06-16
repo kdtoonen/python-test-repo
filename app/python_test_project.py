@@ -11,6 +11,8 @@ app.config.from_object('appconfig')
 app.debug = True
 app.register_blueprint(admin_page)
 login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
 
 
 @app.route('/login', methods=('GET', 'POST'))
