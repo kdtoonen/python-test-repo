@@ -7,7 +7,6 @@ from flask_bootstrap import Bootstrap
 
 
 app = Flask(__name__)
-Bootstrap(app)
 app.config.from_object('appconfig')
 app.debug = True
 app.register_blueprint(admin_page)
