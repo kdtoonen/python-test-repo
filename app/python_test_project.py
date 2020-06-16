@@ -39,7 +39,7 @@ def create_account():
     if request.method == 'GET':
         return render_template('landing.html', messageStatus="", loginStatus="")
     elif request.method == 'POST':
-        username = request.form.get('e-mail')
+        username = request.form.get('e_mail')
         first_name = request.form.get('first_name')
         last_name = request.form.get('last_name')
         if users.this_user_exists_already(username):
@@ -47,9 +47,15 @@ def create_account():
                                                                  "would you like to reset it and receive "
                                                                  "a change password link?", loginStatus="")
         else:
-            users.create_user(username, first_name, last_name)
-            # TODO: handle new user create
-
+            success = users.create_user(username, first_name, last_name)
+            if success:
+                return render_template('landing.html', messageStatus="Your account has been created, "
+                                                                 "please check you e-mail for "
+                                                                 "further instructions", loginStatus="")
+            else:
+                return render_template('landing.html', messageStatus="Something went wrong creating your "
+                                                                 "account, please contact the site  "
+                                                                 "administrator", loginStatus="")
 
 class User:
 
