@@ -2,6 +2,7 @@ import pytest
 import users
 from app import app
 
+
 @pytest.mark.unittest
 def test_create_user_but_already_exists(client, mocker):
     mocker.patch('users.this_user_exists_already', return_value=True)
@@ -29,8 +30,8 @@ def test_create_user_successful(client, mocker):
 
 
 @pytest.mark.unittest
-def test_insert_user_and_check_password(reset_db):
-    reset_db
+def test_insert_user_and_check_password():
+
     with app.app_context():
         users.create_user('test@tst.com', 'test test', 'testewr')
         users.set_user_password('test@tst.com', 'thepassword')

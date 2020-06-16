@@ -1,14 +1,17 @@
 import pytest
 from python_test_project import app
-from model import db
+from model import db as _db
 
 
-@pytest.fixture(scope="session")
+def pytest_sessionstart(session):
+    reset_db()
+
+
 def reset_db():
-    db.init_app(app)
+    _db.init_app(app)
     with app.app_context():
-        db.drop_all()
-        db.create_all()
+        _db.drop_all()
+        _db.create_all()
 
 
 @pytest.fixture(scope="session")
