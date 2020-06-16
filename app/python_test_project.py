@@ -15,6 +15,11 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 
+@app.route('/',  methods=['GET'])
+def index():
+    return render_template('landing.html', messageStatus="", loginStatus="")
+
+
 @app.route('/login', methods=('GET', 'POST'))
 def login():
     if request.method == 'GET':
@@ -26,16 +31,26 @@ def login():
             user_id = users.get_user_id()
             user = User(user_id)
             login_user(user)
-
             return render_template('main.html')
         else:
             return render_template('landing.html', messageStatus="", loginStatus="login failed")
 
 
-@app.route('/',  methods=['GET'])
-def index():
-    return render_template('landing.html', messageStatus="", loginStatus="")
-
+@app.route('/createaccount', methods=('GET', 'POST'))
+def create_account():
+    if request.method == 'GET':
+        return render_template('landing.html', messageStatus="", loginStatus="")
+    elif request.method == 'POST':
+        username = request.form.get('e-mail')
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        if users.this_user_exists_already(username):
+            return render_template('landing.html', messageStatus="You already have an account, "
+                                                                 "would you like to reset it and receive "
+                                                                 "a change password link?", loginStatus="")
+        else:
+            pass
+            # TODO: handle new user create
 
 
 class User:
