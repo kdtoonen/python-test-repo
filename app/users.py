@@ -5,7 +5,8 @@ db = SQLAlchemy()
 
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=False)
+    FirstName = db.Column(db.String(200), nullable=False)
+    LastName = db.Column(db.String(200), nullable=False)
     email = db.Column(db.String(200), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
@@ -18,6 +19,10 @@ def get_user_info(self):
 
 
 def password_and_username_ok(user_name, password):
+    return True
+
+
+def this_user_exists_already(e_mail_address):
     return True
 
 
