@@ -10,6 +10,8 @@ class User(db.Model):
     email = db.Column(db.String(200), nullable=False, unique=True)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     password = db.Column(db.String(200), nullable=False)
+    reset_code = db.Column(db.String(200), nullable=False)
+    active = db.Column(db.Boolean, nullable=False, default=False)
 
 
 class Resource(db.Model):
