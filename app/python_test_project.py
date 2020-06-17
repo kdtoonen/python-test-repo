@@ -42,20 +42,42 @@ def create_account():
         username = request.form.get('e_mail')
         first_name = request.form.get('first_name')
         last_name = request.form.get('last_name')
-        if users.this_user_exists_already(username):
+        empty_value_check = users.check_new_user_first_last_and_user_name(username, first_name, last_name)
+        if empty_value_check:
+            return render_template('landing.html', messageStatus=empty_value_check, loginStatus="")
+        elif users.this_user_exists_already(username):
             return render_template('landing.html', messageStatus="You already have an account, "
                                                                  "would you like to reset it and receive "
                                                                  "a change password link?", loginStatus="")
         else:
-            success = users.create_user(username, first_name, last_name)
-            if success:
+            user_create_successful = users.create_user(username, first_name, last_name)
+            if user_create_successful:
                 return render_template('landing.html', messageStatus="Your account has been created, "
-                                                                 "please check you e-mail for "
-                                                                 "further instructions", loginStatus="")
+                                                                     "please check you e-mail for "
+                                                                     "further instructions", loginStatus="")
             else:
                 return render_template('landing.html', messageStatus="Something went wrong creating your "
-                                                                 "account, please contact the site  "
-                                                                 "administrator", loginStatus="")
+                                                                     "account, please contact the site "
+                                                                     "administrator", loginStatus="")
+
+
+@app.route('/resetpassword', methods=('GET', 'POST'))
+def reset_password():
+    if request.method == 'GET':
+        email = request.args.get('email')
+        reset_code = request.args.get('reset_code')
+        return render_template('resetpassword.html', reset_code=reset_code, email_address=email)
+    elif request.method == 'POST':
+        password = request.form.get('password')
+        password_again = request.form.get('password_again')
+        email = request.form.get('email')
+        reset_code = request.form.get('reset_code')
+        if users.password_follows_rules(password, password_again):
+            users.reset_user_password(email, password, reset_code)
+            return render_template('main.html')
+        else:
+            return render_template('resetpassword.html', reset_code=reset_code,
+                                   email_address=email, message="Unable to set password, please check password rules")
 
 
 class User:
