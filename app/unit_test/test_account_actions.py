@@ -37,3 +37,18 @@ def test_insert_user_and_check_password():
         users.set_user_password('test@tst.com', 'thepassword')
         assert users.password_and_username_ok('test@tst.com', 'thepassword')
 
+
+@pytest.mark.unittest
+@pytest.mark.parametrize(
+    'input_password, input_password_again, expected',
+    [('', '', False),
+     ('Abcdef12345', 'Abcdef12346', False),
+     ('abcdef1234', 'abcdef1234', False),
+     ('ABCDEFGHIJK', 'ABCDEFGHIJK', False),
+     ('abcdefghijk', 'abcdefghijk', False),
+     ('12345678901', '12345678901', False),
+     ('ABCdefGHIjk', 'ABCdefGHIjk', False),
+     (' Abcdefg1234 ', ' Abcdefg1234 ', False),
+     ('Abcdef12345', 'Abcdef12345', True)])
+def test_password_rules(input_password, input_password_again, expected):
+    assert users.password_follows_rules(input_password, input_password_again) is expected
