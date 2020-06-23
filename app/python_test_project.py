@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect
 from flask_login import LoginManager, login_required, login_user, logout_user, UserMixin, current_user
 import users
 from admin_page import admin_page
+import messages
 
 
 app = Flask(__name__)
@@ -53,19 +54,16 @@ def create_account():
         if empty_value_check:
             return render_template('landing.html', messageStatus=empty_value_check, loginStatus="")
         elif users.this_user_exists_already(username):
-            return render_template('landing.html', messageStatus="You already have an account, "
-                                                                 "would you like to reset it and receive "
-                                                                 "a change password link?", loginStatus="")
+            return render_template('landing.html', messageStatus=messages.message_account_was_already_created,
+                                   loginStatus="")
         else:
             user_create_successful = users.create_user(username, first_name, last_name)
             if user_create_successful:
-                return render_template('landing.html', messageStatus="Your account has been created, "
-                                                                     "please check you e-mail for "
-                                                                     "further instructions", loginStatus="")
+                return render_template('landing.html', messageStatus=messages.message_account_is_created,
+                                       loginStatus="")
             else:
-                return render_template('landing.html', messageStatus="Something went wrong creating your "
-                                                                     "account, please contact the site "
-                                                                     "administrator", loginStatus="")
+                return render_template('landing.html', messageStatus=messages.message_error_creating_account,
+                                       loginStatus="")
 
 
 @app.route('/resetpassword', methods=('GET', 'POST'))
@@ -84,7 +82,7 @@ def reset_password():
             return render_template('main.html')
         else:
             return render_template('resetpassword.html', reset_code=reset_code,
-                                   email_address=email, message="Unable to set password, please check password rules")
+                                   email_address=email, message=messages.message_cannot_set_password)
 
 
 class User:
