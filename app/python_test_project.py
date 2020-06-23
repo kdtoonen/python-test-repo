@@ -29,7 +29,8 @@ def login():
             user_id = users.get_user_id()
             user = User(user_id)
             login_user(user)
-            return render_template('main.html')
+            # TODO: load user Name from User class
+            return render_template('main.html', userData=({"firstname": "test", "lastname": "testtest"}))
         else:
             return render_template('landing.html', messageStatus="", loginStatus="login failed")
 
