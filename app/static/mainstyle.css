@@ -1,0 +1,22 @@
+.selectWidth {
+	width: 200px;
+  	margin: 0px;
+  }
+th {
+    background-color: blue;
+    color: white;
+}
+.thumbnail {
+margin: 1px;
+float: left;
+position: relative;
+width:50px;
+height:40px;
+position:relative;
+border-style: solid;
+border-color: #AAA;
+border-width: 2px;
+}
+.speedbug-blue {
+	color: #3ca2c3;
+}

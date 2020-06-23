@@ -1,4 +1,5 @@
-from model import User, db
+from model import User
+from model import db
 import bcrypt
 import random
 import string
