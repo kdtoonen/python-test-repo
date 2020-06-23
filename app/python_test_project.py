@@ -35,6 +35,12 @@ def login():
             return render_template('landing.html', messageStatus="", loginStatus="login failed")
 
 
+@app.route('/logoff', methods=('GET', 'POST'))
+def logoff():
+    logout_user()
+    return render_template('landing.html', messageStatus="Logged off", loginStatus="Not logged in")
+
+
 @app.route('/createaccount', methods=('GET', 'POST'))
 def create_account():
     if request.method == 'GET':

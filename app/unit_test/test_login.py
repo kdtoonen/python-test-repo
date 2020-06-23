@@ -13,3 +13,11 @@ def test_login_fail(client, mocker):
     mocker.patch('users.password_and_username_ok', return_value=False)
     rv = client.post('/login', data=dict(username='test', password='test'), follow_redirects=True)
     assert b'login failed' in rv.data
+
+
+@pytest.mark.unittest
+def test_log_off(client, mocker):
+    mocker.patch('users.password_and_username_ok', return_value=True)
+    rv = client.post('/login', data=dict(username='test', password='test'), follow_redirects=True)
+    rv = client.get('/logoff')
+    assert b'Logged off' in rv.data
