@@ -1,6 +1,7 @@
 import pytest
 import users
 from app import app
+import messages
 
 
 @pytest.mark.unittest
@@ -8,7 +9,7 @@ def test_create_user_but_already_exists(client, mocker):
     mocker.patch('users.this_user_exists_already', return_value=True)
     rv = client.post('/createaccount', data=dict(e_mail='test@test.com', first_name='test', last_name='test'),
                      follow_redirects=True)
-    assert b'You already have an account' in rv.data
+    assert messages.message_account_was_already_created.encode() in rv.data
 
 
 @pytest.mark.unittest
@@ -17,16 +18,16 @@ def test_create_user_success(client, mocker):
     mocker.patch('users.create_user', return_value=True)
     rv = client.post('/createaccount', data=dict(e_mail='test@test.com', first_name='test', last_name='test'),
                      follow_redirects=True)
-    assert b'Your account has been created' in rv.data
+    assert messages.message_account_is_created.encode() in rv.data
 
 
 @pytest.mark.unittest
-def test_create_user_successful(client, mocker):
+def test_create_user_unsuccessful(client, mocker):
     mocker.patch('users.this_user_exists_already', return_value=False)
     mocker.patch('users.create_user', return_value=False)
     rv = client.post('/createaccount', data=dict(e_mail='test@test.com', first_name='test', last_name='test'),
                      follow_redirects=True)
-    assert b'Something went wrong creating your' in rv.data
+    assert messages.message_error_creating_account.encode() in rv.data
 
 
 @pytest.mark.unittest
