@@ -78,8 +78,11 @@ def reset_password():
         email = request.form.get('email')
         reset_code = request.form.get('reset_code')
         if users.password_follows_rules(password, password_again):
-            users.reset_user_password(email, password, reset_code)
-            return render_template('main.html', userData=({"firstname": "test", "lastname": "testtest"}))
+            if users.reset_user_password(email, password, reset_code):
+                return render_template('main.html', userData=({"firstname": "test", "lastname": "testtest"}))
+            else:
+                return render_template('resetpassword.html', reset_code=reset_code,
+                                       email_address=email, message=messages.message_cannot_set_password)
         else:
             return render_template('resetpassword.html', reset_code=reset_code,
                                    email_address=email, message=messages.message_cannot_set_password)
