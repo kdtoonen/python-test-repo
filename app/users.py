@@ -31,9 +31,13 @@ def set_user_password(user_name, password):
 
 def reset_user_password(user_name, password, reset_code):
     user = User.query.filter_by(email=user_name, reset_code=reset_code).first()
-    user.password = bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt())
-    user.reset_code = str(uuid.uuid4())
-    db.session.commit()
+    if user:
+        user.password = bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt())
+        user.reset_code = str(uuid.uuid4())
+        db.session.commit()
+        return True
+    else:
+        return False
 
 
 def password_and_username_ok(user_name, password):
