@@ -39,7 +39,7 @@ def reset_user_password(user_name, password, reset_code):
 def password_and_username_ok(user_name, password):
     user_record = User.query.filter_by(email=user_name).first()
     password_in_database = user_record.password
-    return bcrypt.checkpw(password.encode('utf8'), password_in_database)
+    return bcrypt.checkpw(password.encode('utf8'), password_in_database.encode('utf8'))
 
 
 def this_user_exists_already(e_mail_address):

@@ -3,6 +3,7 @@ from model import db
 import mysql.connector
 # only run this if you want to create an empty databasecd
 # TODO: remove hard coded shit from this file
+# TODO: add condition for using local sqllite database for development purposes
 mydb = mysql.connector.connect(
   host="localhost",
   user="root",
