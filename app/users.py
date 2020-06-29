@@ -16,7 +16,7 @@ def get_user_info(self):
 def create_user(user_email, first_name, last_name):
     # TODO:  fix this function
     reset_code = str(uuid.uuid4())
-    new_user = User(first_name=first_name, last_name=last_name, email=user_email, password=generate_initial_password(),
+    new_user = User(first_name=first_name, last_name=last_name, email=user_email, password=bcrypt.hashpw(generate_initial_password().encode('utf8'), bcrypt.gensalt()),
                     reset_code=reset_code)
     db.session.add(new_user)
     db.session.commit()
@@ -41,9 +41,16 @@ def reset_user_password(user_name, password, reset_code):
 
 
 def password_and_username_ok(user_name, password):
-    user_record = User.query.filter_by(email=user_name).first()
-    password_in_database = user_record.password
-    return bcrypt.checkpw(password.encode('utf8'), password_in_database.encode('utf8'))
+    if user_name and password:
+        user_record = User.query.filter_by(email=user_name).first()
+        if user_record:
+            password_in_database = user_record.password
+            print('test')
+            return bcrypt.checkpw(password.encode('utf8'), password_in_database.encode('utf8'))
+        else:
+            return False
+    else:
+        return False
 
 
 def this_user_exists_already(e_mail_address):
