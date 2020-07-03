@@ -10,7 +10,7 @@ import sys
 
 
 def get_user_info(self):
-    return {"Name": "Test 1"}
+    return {"id": "1", "Name": "Test 1"}
 
 
 def create_user(user_email, first_name, last_name):

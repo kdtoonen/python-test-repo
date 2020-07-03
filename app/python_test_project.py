@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 from flask_login import LoginManager, login_required, login_user, logout_user, UserMixin, current_user
 import users
 from admin_page import admin_page
@@ -79,13 +79,28 @@ def reset_password():
         reset_code = request.form.get('reset_code')
         if users.password_follows_rules(password, password_again):
             if users.reset_user_password(email, password, reset_code):
-                return render_template('main.html', userData=({"firstname": "test", "lastname": "testtest"}))
+                login_and_set_user(email)
+                return redirect(url_for('main_page'))
             else:
                 return render_template('resetpassword.html', reset_code=reset_code,
                                        email_address=email, message=messages.message_cannot_set_password)
         else:
             return render_template('resetpassword.html', reset_code=reset_code,
                                    email_address=email, message=messages.message_cannot_set_password)
+
+
+def login_and_set_user(username):
+    user_info = users.get_user_info(username)
+    user_id = user_info[0]
+    user = User(user_id)
+    user.set_userInfo(user_info)
+    login_user(user)
+
+
+@login_required
+@app.route('/main', methods=('GET', 'POST'))
+def main_page():
+    return render_template('main.html', userData=({"firstname": "test", "lastname": "testtest"}))
 
 
 class User:
@@ -95,11 +110,14 @@ class User:
         self.name = None
         self.userInfo = None
 
+
     def is_authenticated(self):
         return True
 
+
     def is_active(self):
         return True
+
 
     def is_anonymous(self):
         return False
@@ -110,7 +128,7 @@ class User:
     #TODO: FIX THIS
     def set_userInfo(self, userinfo):
         self.userInfo = userinfo
-        self.name = self.userInfo[0]
+        self.name = self.userInfo[1]
 
 
 @login_manager.user_loader
