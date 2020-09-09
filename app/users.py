@@ -46,7 +46,7 @@ def password_and_username_ok(user_name, password):
         if user_record:
             password_in_database = user_record.password
             print('test')
-            return bcrypt.checkpw(password.encode('utf8'), password_in_database.encode('utf8'))
+            return bcrypt.checkpw(password.encode('utf8'), password_in_database)
         else:
             return False
     else:
@@ -99,6 +99,7 @@ def password_follows_rules(password, password_again):
 
 
 def confirmation_email_sent(email_address, reset_code):
+    # TODO: replace this string by the string from messages.py and do a stringreplace for the variables
     message_body = 'Subject: Confirm your e-mail and create login  \n\n' \
                    'Welcome to Reservatron. Please confirm that you have ' \
                    'created an account with us by following the link below. \n\n' \

@@ -2,8 +2,12 @@
 	width: 200px;
   	margin: 0px;
   }
+thead {
+    background-color: #2fa4e7;
+    color: white;
+}
 th {
-    background-color: blue;
+    background-color: #0275d8;
     color: white;
 }
 .thumbnail {

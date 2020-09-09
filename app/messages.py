@@ -6,3 +6,13 @@ message_account_is_created = "Your account has been created, " \
 message_error_creating_account = "Something went wrong creating your account, " \
                                  "please contact the site administrator"
 message_cannot_set_password = "Unable to set password, please check password rules"
+email_message_confirmation = 'Subject: Confirm your e-mail and create login  \n\n' \
+                   'Welcome to Reservatron. Please confirm that you have ' \
+                   'created an account with us by following the link below. \n\n' \
+                   '<a href="http://localhost:5000/resetpassword?reset_code=<reset_code>&email=' \
+                   + '<email_address>">. ' \
+                                      'CONFIRM ACCOUNT </a> \n\n' \
+                                      'If the link does not work, please copy paste the following url in your browser: \n' \
+                                     'http://localhost:5000/resetpassword?reset_code=<reset_code>&email=<email_address>\n\n' \
+                                    'Thanks for using Reservatron.\n\n' \
+                                    'Reservatron '
