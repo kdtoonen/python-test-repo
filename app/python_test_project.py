@@ -1,12 +1,13 @@
 from flask import Flask, render_template, request, redirect
 from flask_login import LoginManager, login_required, login_user, logout_user, UserMixin, current_user
-import users
 from admin_page import admin_page
-import messages
+import messages, users
 
+from services import services
 
 app = Flask(__name__)
 app.config.from_object('appconfig')
+app.register_blueprint(services)
 app.debug = True
 app.register_blueprint(admin_page)
 login_manager = LoginManager()
@@ -116,6 +117,4 @@ class User:
 @login_manager.user_loader
 def load_user(user_id):
     return User(user_id)
-
-
 

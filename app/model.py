@@ -22,6 +22,11 @@ class Flight(db.Model):
     date_time_arrival = db.Column(db.DateTime, nullable=False)
 
 
+class AirField(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    air_field = db.Column(db.String(200), nullable=False)
+
+
 class SeatsAvailable(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     class_name = db.Column(db.String(20), nullable=False)

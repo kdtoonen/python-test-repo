@@ -1,5 +1,7 @@
 FROM python:3.5.9-slim-stretch
 
+
+
 RUN mkdir /app
 WORKDIR /app
 ADD . /app/
