@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect
 from flask_login import LoginManager, login_required, login_user, logout_user, UserMixin, current_user
 from admin_page import admin_page
-import messages, users
+import messages, users, reservation
 
 from services import services
 
@@ -31,8 +31,11 @@ def login():
             user_id = users.get_user_id()
             user = User(user_id)
             login_user(user)
-            # TODO: load user Name from User class
-            return render_template('main.html', userData=({"firstname": "test", "lastname": "testtest"}))
+            user_data = users.get_user_info(user_id)
+            reservations = reservation.get_reservations_for_user(user_id)
+            list_of_reservations = [{"first_name": "Nariyoshi", "last_name": "Miyagi"},
+                                    {"first_name": "Yuri", "last_name": "Gagarin"}]
+            return render_template('main.html', userData=user_data, listOfReservations=reservations)
         else:
             return render_template('landing.html', messageStatus="", loginStatus="login failed")
 

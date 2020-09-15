@@ -9,8 +9,15 @@ import mailer
 import sys
 
 
-def get_user_info(self):
-    return {"Name": "Test 1"}
+def get_user_info(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    user_first_name = 'unknown'
+    user_last_name = 'unknown'
+    if user:
+        user_first_name = user.first_name
+        user_last_name = user.last_name
+
+    return {"first_name": user_first_name, "last_name": user_last_name}
 
 
 def create_user(user_email, first_name, last_name):

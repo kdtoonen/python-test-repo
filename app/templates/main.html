@@ -49,10 +49,10 @@
                 </div>
             </form-->
             <ul class="nav navbar-nav navbar-text">
-                <li><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ userData['firstname'] }} {{ userData['lastname'] }}</li>
+                <li><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ userData['first_name'] }} {{ userData['last_name'] }}</li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/logoff"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Log off</a></li>
+                <li id="log_off"><a href="/logoff"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Log off</a></li>
             </ul>
         </div>
     </nav>
@@ -63,6 +63,9 @@
   <table class="table table-striped table-hover">
     <thead class="bg-primary">
     <tr>
+        <th scope="col">
+            name
+        </th>
         <th scope="col">
             departure
         </th>
@@ -79,21 +82,11 @@
 
     </thead>
     <tbody>
+    {% for n in listOfReservations %}
         <tr>
             <td>
-                01-01-2021
+                {{ n['passenger_first_name'] }} {{ n['passenger_last_name'] }}
             </td>
-            <td>
-                Mars
-            </td>
-            <td>
-                Tanegashima Space Center
-            </td>
-            <td>
-                Economy
-            </td>
-        </tr>
-            <tr>
             <td>
                 01-01-2021
             </td>
@@ -104,23 +97,10 @@
                 Tanegashima Space Center
             </td>
             <td>
-                Economy
+                {{ n['reserved_class'] }}
             </td>
         </tr>
-            <tr>
-            <td>
-                01-01-2021
-            </td>
-            <td>
-                Mars
-            </td>
-            <td>
-                Tanegashima Space Center
-            </td>
-            <td>
-                Economy
-            </td>
-        </tr>
+    {% endfor %}
     </tbody>
 </table>
 

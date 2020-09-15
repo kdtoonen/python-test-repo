@@ -16,7 +16,7 @@ def flight_handler():
                                          destination,
                                          date_time_departure,
                                          date_time_arrival)
-
+        # TODO repetitive code, put into a function
         return Response('{"Status": "Created", "id": "' + str(flight_id) + '"}', status=201,
                         mimetype='application/json')
     else:
@@ -40,7 +40,9 @@ def reservation_handler():
         flight_id = request.json['flight_id']
         user_id = request.json['user_id']
         reserved_class = request.json['reserved_class']
-        reservation_id = reservation.create_reservation(flight_id, user_id, reserved_class)
+        passenger_first_name = request.json['passenger_first_name']
+        passenger_last_name = request.json['passenger_last_name']
+        reservation_id = reservation.create_reservation(flight_id, user_id, reserved_class, passenger_first_name, passenger_last_name)
         return Response('{"Status": "Created", "id": "' + str(reservation_id) + '"}', status=201,
                         mimetype='application/json')
     else:

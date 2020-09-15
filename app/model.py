@@ -39,3 +39,5 @@ class Reservation(db.Model):
     flight_id = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, nullable=False)
     reserved_class = db.Column(db.String(16), nullable=False)
+    passenger_first_name = db.Column(db.String(40), nullable=False)
+    passenger_last_name = db.Column(db.String(40), nullable=False)
