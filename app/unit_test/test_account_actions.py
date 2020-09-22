@@ -32,12 +32,25 @@ def test_create_user_unsuccessful(client, mocker):
 
 @pytest.mark.unittest
 def test_insert_user_and_check_password():
-
     with app.app_context():
         users.create_user('test@tst.com', 'test test', 'testewr')
         users.set_user_password('test@tst.com', 'thepassword')
         assert users.password_and_username_ok('test@tst.com', 'thepassword')
 
+
+@pytest.mark.unittest
+@pytest.mark.parametrize(
+    'input_password, input_user_first_name, input_user_last_name, input_email',
+    [('thepassword', 'test', 'user1', 'testuser1@bluemorpho-st.com'),
+     ('thepassword', 'test', 'user2', 'testuser2@bluemorpho-st.com'),
+     ('thepassword', 'test', 'user3', 'testuser3@bluemorpho-st.com'),
+     ('thepassword', 'test', 'user4', 'testuser4@bluemorpho-st.com'),
+     ('thepassword', 'test', 'user5', 'testuser5@bluemorpho-st.com'),
+     ('thepassword', 'test', 'user6', 'testuser6@bluemorpho-st.com')])
+def test_insert_users(input_password,input_user_first_name,input_user_last_name,input_email):
+    with app.app_context():
+        users.create_user(input_email, input_user_first_name, input_user_last_name)
+        users.set_user_password(input_email, input_password)
 
 @pytest.mark.unittest
 @pytest.mark.parametrize(

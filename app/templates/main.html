@@ -81,25 +81,27 @@
     </tr>
 
     </thead>
-    <tbody>
+    <tbody id="reservation-list">
     {% for n in listOfReservations %}
+
         <tr>
-            <td>
+            <td id="name-{{ loop.index }}">
                 {{ n['passenger_first_name'] }} {{ n['passenger_last_name'] }}
             </td>
-            <td>
-                01-01-2021
+            <td id="departure-{{ loop.index }}">
+                {{ n['date_time_departure'] }}
             </td>
-            <td>
-                Mars
+            <td id="destination-{{ loop.index }}">
+                {{ n['destination'] }}
             </td>
-            <td>
-                Tanegashima Space Center
+            <td id="spaceport-{{ loop.index }}">
+                {{ n['air_field'] }}
             </td>
-            <td>
+            <td id="reservedclass-{{ loop.index }}">
                 {{ n['reserved_class'] }}
             </td>
         </tr>
+
     {% endfor %}
     </tbody>
 </table>

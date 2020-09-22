@@ -28,13 +28,12 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
         if users.password_and_username_ok(username, password):
-            user_id = users.get_user_id()
+            user_id = users.get_user_id(username)
             user = User(user_id)
             login_user(user)
             user_data = users.get_user_info(user_id)
             reservations = reservation.get_reservations_for_user(user_id)
-            list_of_reservations = [{"first_name": "Nariyoshi", "last_name": "Miyagi"},
-                                    {"first_name": "Yuri", "last_name": "Gagarin"}]
+
             return render_template('main.html', userData=user_data, listOfReservations=reservations)
         else:
             return render_template('landing.html', messageStatus="", loginStatus="login failed")

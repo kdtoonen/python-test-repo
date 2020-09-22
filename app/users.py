@@ -67,8 +67,9 @@ def this_user_exists_already(e_mail_address):
         return False
 
 
-def get_user_id():
-    return 1
+def get_user_id(user_name):
+    user_record = User.query.filter_by(email=user_name).first()
+    return user_record.id
 
 
 def generate_initial_password():
