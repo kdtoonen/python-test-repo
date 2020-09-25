@@ -19,10 +19,9 @@ def flight_handler():
                                          date_time_departure,
                                          date_time_arrival)
         # TODO repetitive code, put into a function
-        return Response('{"Status": "Created", "id": "' + str(flight_id) + '"}', status=201,
-                        mimetype='application/json')
+        return make_service_response(201, 'Created', '"id": "' + str(flight_id) + '"')
     else:
-        return Response("{'Status': 'Bad request'}", status=400, mimetype='application/json')
+        return make_service_response(400, 'Bad request', '')
 
 
 @services.route('/airfield', methods=(['POST']))
@@ -30,10 +29,9 @@ def air_field_handler():
     if request.json:
         air_field = request.json['air_field']
         air_field_id = airfield.create_air_field(air_field)
-        return Response('{"Status": "Created", "id": "' + str(air_field_id) + '"}', status=201,
-                        mimetype='application/json')
+        return make_service_response(201, 'Created', '"id": "' + str(air_field_id) + '"')
     else:
-        return Response("{'Status': 'Bad request'}", status=400, mimetype='application/json')
+        return make_service_response(400, 'Bad request', '')
 
 
 @services.route('/reservation', methods=(['POST']))
@@ -45,24 +43,25 @@ def reservation_handler():
             reserved_class = request.json['reserved_class']
             passenger_first_name = request.json['passenger_first_name']
             passenger_last_name = request.json['passenger_last_name']
-            reservation_id = reservation.create_reservation(flight_id, user_id, reserved_class, passenger_first_name, passenger_last_name)
-            return Response('{"Status": "Created", "id": "' + str(reservation_id) + '"}', status=201,
-                            mimetype='application/json')
+            reservation_id = reservation.create_reservation(flight_id,
+                                                            user_id,
+                                                            reserved_class,
+                                                            passenger_first_name,
+                                                            passenger_last_name)
+            return make_service_response(201, 'Created', '"id": ' + str(reservation_id))
         else:
-            return Response("{'Status': 'Bad request'}", status=400, mimetype='application/json')
-
+            return make_service_response(400, 'Bad request', '')
     else:
-        return Response("{'Status': 'Method not allowed'}", status=405, mimetype='application/json')
+        return make_service_response(405, 'Method not allowed', '')
 
 
 @services.route('/reservation/id/<int:reservation_id>', methods=(['DELETE']))
 def reservation_delete_handler(reservation_id):
     if request.method == 'DELETE':
         reservation.delete_reservation(reservation_id)
-        return Response('{"Status": "Deleted", "id": "' + str(reservation_id) + '"}', status=202,
-                        mimetype='application/json')
+        return make_service_response(202, 'Deleted', '"id": "' + str(reservation_id) + '"')
     else:
-        return Response("{'Status': 'Method not allowed'}", status=405, mimetype='application/json')
+        return make_service_response(405, 'Method not allowed', '')
 
 
 @services.route('/reservations/userid/<int:user_id>', methods=(['GET']))
@@ -91,4 +90,4 @@ def make_service_response(status_code, status_message, content):
     content_message = ''
     if content:
         content_message = ", " + content
-    return Response("{'Status': '" + status_message + content_message + "'}", status=status_code, mimetype='application/json')
+    return Response('{"Status": "' + status_message + '"' + content_message + '}', status=status_code, mimetype='application/json')
